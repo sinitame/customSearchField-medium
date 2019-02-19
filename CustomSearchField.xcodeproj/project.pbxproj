@@ -13,6 +13,7 @@
 		311CAAC5221C57410077FA7E /* CustomSearchField.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 311CAAC3221C57410077FA7E /* CustomSearchField.xcdatamodeld */; };
 		311CAAC7221C57430077FA7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 311CAAC6221C57430077FA7E /* Assets.xcassets */; };
 		311CAACA221C57430077FA7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 311CAAC8221C57430077FA7E /* LaunchScreen.storyboard */; };
+		311CAAD5221C60FC0077FA7E /* CustomSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311CAAD4221C60FC0077FA7E /* CustomSearchTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		311CAAC6221C57430077FA7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		311CAAC9221C57430077FA7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		311CAACB221C57430077FA7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		311CAAD4221C60FC0077FA7E /* CustomSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,40 @@
 		311CAABB221C57410077FA7E /* CustomSearchField */ = {
 			isa = PBXGroup;
 			children = (
+				311CAAD3221C608C0077FA7E /* Controllers */,
+				311CAAD2221C60840077FA7E /* View */,
+				311CAAD1221C60720077FA7E /* Model */,
 				311CAABC221C57410077FA7E /* AppDelegate.swift */,
-				311CAABE221C57410077FA7E /* ViewController.swift */,
-				311CAAC0221C57410077FA7E /* Main.storyboard */,
 				311CAAC6221C57430077FA7E /* Assets.xcassets */,
 				311CAAC8221C57430077FA7E /* LaunchScreen.storyboard */,
 				311CAACB221C57430077FA7E /* Info.plist */,
-				311CAAC3221C57410077FA7E /* CustomSearchField.xcdatamodeld */,
 			);
 			path = CustomSearchField;
+			sourceTree = "<group>";
+		};
+		311CAAD1221C60720077FA7E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				311CAAC3221C57410077FA7E /* CustomSearchField.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		311CAAD2221C60840077FA7E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				311CAAC0221C57410077FA7E /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		311CAAD3221C608C0077FA7E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				311CAABE221C57410077FA7E /* ViewController.swift */,
+				311CAAD4221C60FC0077FA7E /* CustomSearchTextField.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				311CAAD5221C60FC0077FA7E /* CustomSearchTextField.swift in Sources */,
 				311CAABF221C57410077FA7E /* ViewController.swift in Sources */,
 				311CAABD221C57410077FA7E /* AppDelegate.swift in Sources */,
 				311CAAC5221C57410077FA7E /* CustomSearchField.xcdatamodeld in Sources */,
