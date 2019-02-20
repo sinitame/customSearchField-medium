@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D42" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Cities" representedClassName="Cities" syncable="YES" codeGenerationType="class">
+        <attribute name="cityName" attributeType="String" syncable="YES"/>
+        <attribute name="countryName" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Cities" positionX="-45" positionY="0" width="128" height="75"/>
+    </elements>
 </model>

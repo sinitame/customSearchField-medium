@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 class CustomSearchTextField: UITextField{
     
-    var dataList : [SearchItem] = [SearchItem]()
+    var dataList : [Cities] = [Cities]()
     var resultsList : [SearchItem] = [SearchItem]()
     var tableView: UITableView?
     
-    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // Connecting the new element to the parent view
     open override func willMove(toWindow newWindow: UIWindow?) {
@@ -64,16 +65,47 @@ class CustomSearchTextField: UITextField{
         print("End on Exit")
     }
     
+    //////////////////////////////////////////////////////////////////////////////
+    // Data Handling methods
+    //////////////////////////////////////////////////////////////////////////////
     
-    // MARK : Filtering methods
+    
+    // MARK: CoreData manipulation methods
+    
+    // Don't need this function in this case
+    func saveItems() {
+        print("Saving items")
+        do {
+            try context.save()
+        } catch {
+            print("Error while saving items: \(error)")
+        }
+    }
+    
+    func loadItems(withRequest request : NSFetchRequest<Cities>) {
+        print("loading items")
+        do {
+            dataList = try context.fetch(request)
+        } catch {
+            print("Error while fetching data: \(error)")
+        }
+    }
+    
+    
+    // MARK: Filtering methods
     
     fileprivate func filter() {
+        let predicate = NSPredicate(format: "cityName CONTAINS[cd] %@", self.text!)
+        let request : NSFetchRequest<Cities> = Cities.fetchRequest()
+        request.predicate = predicate
+
+        loadItems(withRequest : request)
         
         resultsList = []
         
         for i in 0 ..< dataList.count {
             
-            let item = dataList[i]
+            let item = SearchItem(cityName: dataList[i].cityName!,countryName: dataList[i].countryName!)
 
             let cityFilterRange = (item.cityName as NSString).range(of: text!, options: .caseInsensitive)
             let countryFilterRange = (item.countryName as NSString).range(of: text!, options: .caseInsensitive)
@@ -118,7 +150,7 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
             self.window?.addSubview(tableView)
 
         } else {
-            addData()
+            //addData()
             print("tableView created")
             tableView = UITableView(frame: CGRect.zero)
         }
@@ -196,11 +228,23 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
 
     // MARK: Early testing methods
     func addData(){
-        let a = SearchItem(cityName: "Paris",countryName: "France")
-        let b = SearchItem(cityName: "Porto",countryName: "France")
-        let c = SearchItem(cityName: "Pavard",countryName: "France")
-        let d = SearchItem(cityName: "Parole",countryName: "France")
-        let e = SearchItem(cityName: "Paria",countryName: "France")
+        let a = Cities(context: context)
+        a.cityName = "Paris"
+        a.countryName = "France"
+        let b = Cities(context: context)
+        b.cityName = "Porto"
+        b.countryName = "France"
+        let c = Cities(context: context)
+        c.cityName = "Pavard"
+        c.countryName = "France"
+        let d = Cities(context: context)
+        d.cityName = "Parole"
+        d.countryName = "France"
+        let e = Cities(context: context)
+        e.cityName = "Paria"
+        e.countryName = "France"
+        
+        saveItems()
         
         dataList.append(a)
         dataList.append(b)
