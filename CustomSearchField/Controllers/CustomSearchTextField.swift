@@ -10,7 +10,8 @@ import UIKit
 
 class CustomSearchTextField: UITextField{
     
-    var dataList : [String] = []
+    var dataList : [SearchItem] = [SearchItem]()
+    var resultsList : [SearchItem] = [SearchItem]()
     var tableView: UITableView?
     
     
@@ -45,7 +46,7 @@ class CustomSearchTextField: UITextField{
     
     @objc open func textFieldDidChange(){
         print("Text changed ...")
-        addData()
+        filter()
         updateSearchTableView()
         tableView?.isHidden = false
     }
@@ -63,6 +64,37 @@ class CustomSearchTextField: UITextField{
         print("End on Exit")
     }
     
+    
+    // MARK : Filtering methods
+    
+    fileprivate func filter() {
+        
+        resultsList = []
+        
+        for i in 0 ..< dataList.count {
+            
+            let item = dataList[i]
+
+            let cityFilterRange = (item.cityName as NSString).range(of: text!, options: .caseInsensitive)
+            let countryFilterRange = (item.countryName as NSString).range(of: text!, options: .caseInsensitive)
+                
+            if cityFilterRange.location != NSNotFound {
+                item.attributedCityName = NSMutableAttributedString(string: item.cityName)
+                item.attributedCountryName = NSMutableAttributedString(string: item.countryName)
+                
+                item.attributedCityName!.setAttributes([.font: UIFont.boldSystemFont(ofSize: 17)], range: cityFilterRange)
+                if countryFilterRange.location != NSNotFound {
+                    item.attributedCountryName!.setAttributes([.font: UIFont.boldSystemFont(ofSize: 17)], range: countryFilterRange)
+                }
+                
+                resultsList.append(item)
+            }
+            
+        }
+        
+        tableView?.reloadData()
+    }
+    
 
 }
 
@@ -78,7 +110,7 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
     
     // Create SearchTableview
     func buildSearchTableView() {
-        
+
         if let tableView = tableView {
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CustomSearchTextFieldCell")
             tableView.delegate = self
@@ -86,6 +118,7 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
             self.window?.addSubview(tableView)
 
         } else {
+            addData()
             print("tableView created")
             tableView = UITableView(frame: CGRect.zero)
         }
@@ -138,8 +171,8 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(dataList.count)
-        return dataList.count
+        print(resultsList.count)
+        return resultsList.count
     }
     
     // MARK: TableViewDelegate methods
@@ -149,13 +182,13 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomSearchTextFieldCell", for: indexPath) as UITableViewCell
         cell.backgroundColor = UIColor.clear
-        cell.textLabel?.text = dataList[indexPath.row]
+        cell.textLabel?.attributedText = resultsList[indexPath.row].getFormatedText()
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("selected row")
-        self.text = dataList[indexPath.row]
+        self.text = resultsList[indexPath.row].getStringText()
         tableView.isHidden = true
         self.endEditing(true)
     }
@@ -163,9 +196,17 @@ extension CustomSearchTextField: UITableViewDelegate, UITableViewDataSource {
 
     // MARK: Early testing methods
     func addData(){
-        print(self.text!)
-        dataList.append(self.text!)
-        print(dataList)
+        let a = SearchItem(cityName: "Paris",countryName: "France")
+        let b = SearchItem(cityName: "Porto",countryName: "France")
+        let c = SearchItem(cityName: "Pavard",countryName: "France")
+        let d = SearchItem(cityName: "Parole",countryName: "France")
+        let e = SearchItem(cityName: "Paria",countryName: "France")
+        
+        dataList.append(a)
+        dataList.append(b)
+        dataList.append(c)
+        dataList.append(d)
+        dataList.append(e)
     }
     
 }
